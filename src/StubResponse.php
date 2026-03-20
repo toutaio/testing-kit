@@ -12,9 +12,9 @@ final readonly class StubResponse implements ResponseInterface
      * @param array<string, list<string>> $headers
      */
     public function __construct(
-        private int $statusCode = 200,
-        private array $headers = [],
-        private string $body = '',
+        public int $statusCode = 200,
+        public array $headers = [],
+        public string $body = '',
     ) {}
 
     public function statusCode(): int

@@ -12,10 +12,10 @@ final readonly class StubRequest implements RequestInterface
      * @param array<string, list<string>> $headers
      */
     public function __construct(
-        private string $method = 'GET',
-        private string $uri = '/',
-        private array $headers = [],
-        private string $body = '',
+        public string $method = 'GET',
+        public string $uri = '/',
+        public array $headers = [],
+        public string $body = '',
     ) {}
 
     public function method(): string
