@@ -1,0 +1,48 @@
+identity:
+  id: "testing.assertions.validate.LayerRule"
+  purpose: "Architecture assertions for validating layer rules and dependency cycles"
+  domain: "testing"
+  subdomain: "assertions"
+  verb: "validate"
+  entity: "LayerRule"
+
+layer: L1_ATOM
+
+contract:
+  input: "ComponentDescriptor | DependencyGraph"
+  output:
+    success: "void (assertion passes)"
+    failure: "ArchitectureViolation (thrown)"
+  side_effects: NONE
+  idempotent: true
+  deterministic: true
+
+dependencies:
+  - "aria-build.ComponentDescriptor"
+  - "aria-build.DependencyGraph"
+  - "aria-build.LayerRule"
+  - "testing.ArchitectureViolation"
+
+connections: []
+
+context_budget:
+  to_use: 80
+  to_modify: 150
+  to_extend: 300
+  to_replace: 120
+
+test_contract:
+  scenarios:
+    - "molecule depending on atom passes layer rule validation"
+    - "atom depending on molecule fails layer rule validation"
+    - "acyclic dependency graph passes cycle detection"
+    - "cyclic dependency graph is detected by assertHasCycles"
+    - "assertLayerRuleFails throws when rule actually passes"
+    - "assertLayerRulePasses throws when rule actually fails"
+    - "ArchitectureViolation extends RuntimeException for catchability"
+    - "ArchitectureViolation preserves descriptive violation message"
+
+stability: EXPERIMENTAL
+
+lifecycle:
+  phase: DRAFT

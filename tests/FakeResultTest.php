@@ -7,6 +7,7 @@ use Touta\Aria\Runtime\StructuredFailure;
 use Touta\Aria\Runtime\Success;
 use Touta\TestingKit\FakeResult;
 
+// Scenario: FakeResult::success wraps value in a Success instance
 it('creates a success result', function (): void {
     $result = FakeResult::success(42);
 
@@ -14,6 +15,7 @@ it('creates a success result', function (): void {
         ->and($result->value())->toBe(42);
 });
 
+// Scenario: FakeResult::failure wraps error in a Failure instance
 it('creates a failure result', function (): void {
     $result = FakeResult::failure('oops');
 
@@ -21,6 +23,7 @@ it('creates a failure result', function (): void {
         ->and($result->error())->toBe('oops');
 });
 
+// Scenario: FakeResult::structuredFailure creates Failure with StructuredFailure payload
 it('creates a structured failure result', function (): void {
     $result = FakeResult::structuredFailure('ERR_CODE', 'Something went wrong', ['key' => 'val']);
 

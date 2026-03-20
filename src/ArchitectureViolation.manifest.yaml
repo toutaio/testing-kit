@@ -1,0 +1,38 @@
+identity:
+  id: "testing.ArchitectureViolation"
+  purpose: "Typed exception for architecture assertion violations"
+  domain: "testing"
+  subdomain: null
+  verb: null
+  entity: "ArchitectureViolation"
+
+layer: L0_PRIMITIVE
+
+contract:
+  input: "string message"
+  output:
+    success: "ArchitectureViolation"
+    failure: null
+  side_effects: NONE
+  idempotent: true
+  deterministic: true
+
+dependencies: []
+
+connections: []
+
+context_budget:
+  to_use: 50
+  to_modify: 80
+  to_extend: 150
+  to_replace: 60
+
+test_contract:
+  scenarios:
+    - "ArchitectureViolation extends RuntimeException for catchability"
+    - "ArchitectureViolation preserves descriptive violation message"
+
+stability: EXPERIMENTAL
+
+lifecycle:
+  phase: DRAFT

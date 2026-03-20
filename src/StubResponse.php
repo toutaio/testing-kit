@@ -5,32 +5,37 @@ declare(strict_types=1);
 namespace Touta\TestingKit;
 
 use Touta\Aria\Runtime\Http\ResponseInterface;
+use Touta\Aria\Runtime\Type\HeaderMap;
+use Touta\Aria\Runtime\Type\HttpBody;
+use Touta\Aria\Runtime\Type\StatusCode;
 
 final readonly class StubResponse implements ResponseInterface
 {
-    /**
-     * @param array<string, list<string>> $headers
-     */
-    public function __construct(
-        public int $statusCode = 200,
-        public array $headers = [],
-        public string $body = '',
-    ) {}
+    private StatusCode $statusCode;
+    private HeaderMap $headers;
+    private HttpBody $body;
 
-    public function statusCode(): int
+    public function __construct(
+        ?StatusCode $statusCode = null,
+        ?HeaderMap $headers = null,
+        ?HttpBody $body = null,
+    ) {
+        $this->statusCode = $statusCode ?? StatusCode::from(200);
+        $this->headers = $headers ?? HeaderMap::from([]);
+        $this->body = $body ?? HttpBody::from('');
+    }
+
+    public function statusCode(): StatusCode
     {
         return $this->statusCode;
     }
 
-    /**
-     * @return array<string, list<string>>
-     */
-    public function headers(): array
+    public function headers(): HeaderMap
     {
         return $this->headers;
     }
 
-    public function body(): string
+    public function body(): HttpBody
     {
         return $this->body;
     }

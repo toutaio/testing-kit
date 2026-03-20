@@ -1,0 +1,42 @@
+identity:
+  id: "testing.doubles.create.FakeResult"
+  purpose: "Factory for creating Result test doubles (Success, Failure, StructuredFailure)"
+  domain: "testing"
+  subdomain: "doubles"
+  verb: "create"
+  entity: "FakeResult"
+
+layer: L2_MOLECULE
+
+contract:
+  input: "mixed value | mixed error | string code + string message + array context"
+  output:
+    success: "Success<T> | Failure<E>"
+    failure: null
+  side_effects: NONE
+  idempotent: true
+  deterministic: true
+
+dependencies:
+  - "aria.Success"
+  - "aria.Failure"
+  - "aria.StructuredFailure"
+
+connections: []
+
+context_budget:
+  to_use: 50
+  to_modify: 100
+  to_extend: 200
+  to_replace: 80
+
+test_contract:
+  scenarios:
+    - "FakeResult::success wraps value in a Success instance"
+    - "FakeResult::failure wraps error in a Failure instance"
+    - "FakeResult::structuredFailure creates Failure with StructuredFailure payload"
+
+stability: EXPERIMENTAL
+
+lifecycle:
+  phase: DRAFT

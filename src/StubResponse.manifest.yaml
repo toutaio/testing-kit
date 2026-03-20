@@ -1,0 +1,43 @@
+identity:
+  id: "testing.doubles.create.StubResponse"
+  purpose: "Stub implementation of ResponseInterface for testing with branded HTTP types"
+  domain: "testing"
+  subdomain: "doubles"
+  verb: "create"
+  entity: "StubResponse"
+
+layer: L2_MOLECULE
+
+contract:
+  input: "?StatusCode statusCode, ?HeaderMap headers, ?HttpBody body"
+  output:
+    success: "StubResponse (implements ResponseInterface)"
+    failure: null
+  side_effects: NONE
+  idempotent: true
+  deterministic: true
+
+dependencies:
+  - "aria.StatusCode"
+  - "aria.HeaderMap"
+  - "aria.HttpBody"
+
+connections:
+  - "aria.http.ResponseInterface"
+
+context_budget:
+  to_use: 50
+  to_modify: 100
+  to_extend: 200
+  to_replace: 80
+
+test_contract:
+  scenarios:
+    - "default StubResponse returns branded 200 status, empty headers, and empty body"
+    - "custom StubResponse preserves branded values through round-trip"
+    - "StubResponse satisfies the runtime ResponseInterface contract"
+
+stability: EXPERIMENTAL
+
+lifecycle:
+  phase: DRAFT

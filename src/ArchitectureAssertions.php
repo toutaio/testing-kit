@@ -13,14 +13,14 @@ final class ArchitectureAssertions
     /**
      * @param array<ComponentDescriptor> $allComponents
      *
-     * @throws \RuntimeException
+     * @throws ArchitectureViolation
      */
     public static function assertLayerRulePasses(ComponentDescriptor $component, array $allComponents): void
     {
         $result = (new LayerRule())->validate($component, $allComponents);
 
         if ($result->isFailure()) {
-            throw new \RuntimeException(
+            throw new ArchitectureViolation(
                 "Expected layer rule to pass for \"{$component->name}\", but it failed",
             );
         }
@@ -29,36 +29,36 @@ final class ArchitectureAssertions
     /**
      * @param array<ComponentDescriptor> $allComponents
      *
-     * @throws \RuntimeException
+     * @throws ArchitectureViolation
      */
     public static function assertLayerRuleFails(ComponentDescriptor $component, array $allComponents): void
     {
         $result = (new LayerRule())->validate($component, $allComponents);
 
         if ($result->isSuccess()) {
-            throw new \RuntimeException(
+            throw new ArchitectureViolation(
                 "Expected layer rule to fail for \"{$component->name}\", but it passed",
             );
         }
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws ArchitectureViolation
      */
     public static function assertNoCycles(DependencyGraph $graph): void
     {
         if ($graph->hasCycle()) {
-            throw new \RuntimeException('Expected no cycles in the dependency graph, but a cycle was found');
+            throw new ArchitectureViolation('Expected no cycles in the dependency graph, but a cycle was found');
         }
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws ArchitectureViolation
      */
     public static function assertHasCycles(DependencyGraph $graph): void
     {
         if (!$graph->hasCycle()) {
-            throw new \RuntimeException('Expected cycles in the dependency graph, but none were found');
+            throw new ArchitectureViolation('Expected cycles in the dependency graph, but none were found');
         }
     }
 }

@@ -1,0 +1,43 @@
+identity:
+  id: "testing.TestingError"
+  purpose: "Domain-typed error for the testing-kit package"
+  domain: "testing"
+  subdomain: null
+  verb: null
+  entity: "TestingError"
+
+layer: L0_PRIMITIVE
+
+contract:
+  input: "string code, string message, array context"
+  output:
+    success: "TestingError"
+    failure: null
+  side_effects: NONE
+  idempotent: true
+  deterministic: true
+
+dependencies: []
+
+connections: []
+
+context_budget:
+  to_use: 50
+  to_modify: 100
+  to_extend: 200
+  to_replace: 80
+
+test_contract:
+  scenarios:
+    - "TestingError stores code, message, and context from constructor"
+    - "TestingError defaults context to empty array when omitted"
+    - "STUB_FAILED constant matches domain code convention"
+    - "ASSERTION_FAILED constant matches domain code convention"
+    - "DOUBLE_MISCONFIGURED constant matches domain code convention"
+    - "withMessage returns a new TestingError preserving code and context"
+    - "withContext returns a new TestingError merging additional context"
+
+stability: EXPERIMENTAL
+
+lifecycle:
+  phase: DRAFT
